@@ -11,8 +11,8 @@
 #define cin fin
 #define cout fout
 using namespace std;
-ifstream fin("/Users/iisuos/Desktop/Test/Hello World/Hello World/ input.txt");
-ofstream fout("/Users/iisuos/Desktop/Test/Hello World/Hello World/output.txt");
+ifstream fin("input.txt");
+ofstream fout("output.txt");
 bool STOP = false;
 mutex m;
 void Answer(vector<int>& vec, size_t k) {
