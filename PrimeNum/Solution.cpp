@@ -21,6 +21,7 @@ bool checkPrimeNumber(int n) {
     return isPrimeNumber;
 }
 void PrimeCheck(vector <int>& vec, vector <bool>& res) {
+    int temp;
     while (1) {
         unique_lock<mutex> guard(m);
         if (iter == vec.size()) {
@@ -28,12 +29,12 @@ void PrimeCheck(vector <int>& vec, vector <bool>& res) {
         }
         else {
             iter++;
+            temp = iter;
         }
         guard.unlock();
-        if(checkPrimeNumber(vec[iter - 1]))
-            res[iter - 1] = 1;
+        if(checkPrimeNumber(vec[temp - 1]))
+            res[temp - 1] = 1;
     }
-    
 }
 int main() {
     int n;
