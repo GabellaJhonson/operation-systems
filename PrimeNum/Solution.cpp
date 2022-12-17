@@ -55,7 +55,7 @@ int main() {
     vector <thread> th;
     for (int i = 0; i < sz; i++)
     {
-        th.emplace_back(ref(vec), ref(res));  // на паре так делали
+        th.emplace_back(PrimeCheck, ref(vec), ref(res));  // на паре так делали
         //th.emplace_back([&vec, &res]() {PrimeCheck(vec, res); });
     }
     for (int i = 0; i < sz; i++)
