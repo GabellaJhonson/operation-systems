@@ -5,6 +5,9 @@
 using namespace std;
 
 class Spinlock {
+private:
+	atomic<bool> lock;
+public:
 	Spinlock() : lock(false) {}
 
 	void Lock() {
@@ -14,7 +17,4 @@ class Spinlock {
 	void Unlock() {
 		lock.store(false);
 	}
-
-private:
-	atomic<bool> lock;
 };
