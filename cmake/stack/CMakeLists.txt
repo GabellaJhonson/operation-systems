@@ -12,5 +12,5 @@ set_target_properties(
 target_include_directories( 
        cmkpr
        PUBLIC
-       ${CMAKE_CURRENT_SOURCE_DIR}/stack
+       ${CMAKE_CURRENT_SOURCE_DIR}
 )
