@@ -7,9 +7,6 @@ set(HEADERS solver/solver.h)
 add_subdirectory(stack)
 
 add_executable(cmkpr ${SOURCES} ${HEADERS})
-
- #add_executeble(cmkpr main.cpp solver.cpp ThreadSafeStack.cpp)
- 
 set_target_properties(
        cmkpr PROPERTIES
        CXX_STANDARD 17
