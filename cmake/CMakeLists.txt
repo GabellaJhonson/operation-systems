@@ -2,11 +2,9 @@ cmake_minimum_required(VERSION 3.13)
 
 project(cmkpr) 
 
-set(SOURCES main.cpp solver/solver.cpp)
-set(HEADERS solver/solver.h)
 add_subdirectory(stack)
 
-add_executable(cmkpr ${SOURCES} ${HEADERS})
+add_executable(cmkpr main.cpp solver/solver.cpp solver/solver.h)
 set_target_properties(
        cmkpr PROPERTIES
        CXX_STANDARD 17
