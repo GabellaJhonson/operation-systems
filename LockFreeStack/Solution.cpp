@@ -9,58 +9,56 @@ template<class T>
 class Stack {
 public:
 
-	Stack(){
-  head = nullptr;
-  }
+    Stack() : head(nullptr) {}
 
-	void Pop(T& value) {
-		Node* old_head = head.load();
-		while (!head.compare_exchange_weak(old_head, old_head->next));
-		value = old_head->value;
-	}
+    void Pop(T& value) {
+        Node* old_head = head.load();
+        while (!head.compare_exchange_weak(old_head, old_head->next));
+        value = old_head->value;
+    }
 
-	void Push(const T& obj) {
-		Node* newnd = new Node(obj);
-		newnd->next = head.load();
-		while (!head.compare_exchange_weak(newnd->next, newnd));
-	}
-	
-	void Print() {
-		Node* temp = head;
-		if (head != nullptr) {
-			while (temp != nullptr) {
-				cout << temp->value << " ";
-				temp = temp->next;
-			}
-			cout << endl;
-		}
-		cout << endl;
-	}
+    void Push(const T& obj) {
+        Node* newnd = new Node(obj);
+        newnd->next = head.load();
+        while (!head.compare_exchange_weak(newnd->next, newnd));
+    }
+    
+    void Print() {
+        Node* temp = head;
+        if (head != nullptr) {
+            while (temp != nullptr) {
+                cout << temp->value << " ";
+                temp = temp->next;
+            }
+            cout << endl;
+        }
+        cout << endl;
+    }
 
-	private:
-	struct Node {
-		Node* next;
-		T value;
-		Node(const T& data) : value(data), next(nullptr) {}
-	};
-	atomic<Node*> head;
+    private:
+    struct Node {
+        Node* next;
+        T value;
+        Node(const T& data) : value(data), next(nullptr) {}
+    };
+    atomic<Node*> head;
 };
   
 int main() {
-	Stack<int> stk;
-	int value = 0;
-	vector<thread> threads;
-	for (int i = 0; i < 1; ++i) {
-		threads.emplace_back(&Stack<int>::Push,stk, value);
-		value++;
-	}
-	stk.Print();
-	for (int i = 0; i < 1; ++i) {
-		threads.emplace_back(&Stack<int>::Pop,stk, value);
-		value += value - 2;
-	}
-	stk.Print();
-	for (auto&& thr : threads) {
-		thr.join();
-	}
+    Stack<int> stk;
+    int value = 0;
+    vector<thread> threads;
+    for (int i = 0; i < 10; ++i) {
+        threads.emplace_back([&stk, &value]() {stk.Push(value);});
+        value++;
+    }
+    stk.Print();
+    for (int i = 0; i < 10; ++i) {
+        threads.emplace_back([&stk, &value]() {stk.Pop(value);});
+        value += value - 2;
+    }
+    stk.Print();
+    for (auto&& thr : threads) {
+        thr.join();
+    }
 }
