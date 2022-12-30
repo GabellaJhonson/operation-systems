@@ -32,7 +32,9 @@ void FindPrime(int n) {
 }
 void Print(){
     unique_lock<mutex> guard(m);
+    while(signal == 0){
     cv.wait(guard);
+    }
     cout << signal;
 }
 int main() {
